@@ -1,5 +1,7 @@
 // Chargement des variables d'environnement
-require("dotenv").config();
+const dotenv = require("dotenv");
+dotenv.config();
+dotenv.config({ path: "./.env.local", override: true });
 
 const http = require("http");
 const app = require("./app");

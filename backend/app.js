@@ -6,11 +6,13 @@ const mongoose = require("mongoose");
 // const userRoutes = require("./routes/userRoutes");
 
 mongoose
-  .connect(process.env.DATABASE_URL)
+  .connect(process.env.DATABASE_URI)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Could not connect to MongoDB", err));
 
 const app = express();
+
+const userRoutes = require("./routes/user");
 
 app.use(express.json());
 
@@ -21,5 +23,7 @@ app.use((error, req, res, next) => {
     .status(error.status || 400)
     .json({ message: error.message || "An error occurred" });
 });
+
+app.use("/api/auth", userRoutes);
 
 module.exports = app;
