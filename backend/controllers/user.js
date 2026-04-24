@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-// Inscription d'un nouvel utilisateur
+// Inscription d'un utilisateur
 exports.signup = async (req, res, next) => {
   bcrypt
     .hash(req.body.password, 10)
@@ -21,7 +21,7 @@ exports.signup = async (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-// Connexion d'un utilisateur existant
+// Connexion d'un utilisateur
 exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email })
     .then((user) => {
@@ -50,9 +50,15 @@ exports.login = (req, res, next) => {
             secure: true,
             maxAge: 24 * 60 * 60 * 1000,
           });
-          res.status(200).json({ userId: user._id, token: JWTtoken });
+          res.status(200).json({ message:"Connexion réussie !" });
         })
         .catch((error) => res.status(500).json({ error }));
     })
     .catch((error) => res.status(500).json({ error }));
+};
+
+// Déconnexion d'un utilisateur
+exports.logout = (req, res, next) => {
+  res.clearCookie("JWTtoken");
+  res.status(200).json({ message: "Déconnexion réussie !" });
 };
