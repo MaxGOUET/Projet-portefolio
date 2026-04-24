@@ -2,18 +2,16 @@ const express = require("express");
 
 const mongoose = require("mongoose");
 
-// const postRoutes = require("./routes/postRoutes");
-// const userRoutes = require("./routes/userRoutes");
-
 mongoose
   .connect(process.env.DATABASE_URI)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Could not connect to MongoDB", err));
 
 const app = express();
+const cookieParser = require("cookie-parser");
 
 const userRoutes = require("./routes/user");
-
+app.use(cookieParser());
 app.use(express.json());
 
 // capte toutes les erreur renvoyées par l'app
