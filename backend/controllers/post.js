@@ -13,28 +13,32 @@ exports.getPostById = (req, res, next) => {
 };
 
 exports.createPost = (req, res, next) => {
+  const postObject = JSON.parse(req.body.post);
+  delete postObject._id;
+  delete postObject._userId;
   const post = new Post({
-    title: req.body.title,
-    url: req.body.url,
-    description: req.body.description,
-    tag: req.body.tag,
-    userId: req.body.userId,
+    ...postObject,
+    userId: req.auth.userId,
     imageUrl: req.body.imageUrl,
   });
   post
     .save()
-    .then(() => res.status(201).json({ message: "Post created successfully!" }))
+    .then(() => res.status(201).json({ message: "Post créé avec succès !" }))
     .catch((error) => res.status(400).json({ error }));
 };
 
 exports.updatePost = (req, res, next) => {
   Post.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-    .then(() => res.status(200).json({ message: "Post updated successfully!" }))
+    .then(() =>
+      res.status(200).json({ message: "Post mis à jour avec succès !" }),
+    )
     .catch((error) => res.status(400).json({ error }));
 };
 
 exports.deletePost = (req, res, next) => {
   Post.deleteOne({ _id: req.params.id })
-    .then(() => res.status(200).json({ message: "Post deleted successfully!" }))
+    .then(() =>
+      res.status(200).json({ message: "Post supprimé avec succès !" }),
+    )
     .catch((error) => res.status(400).json({ error }));
 };

@@ -4,8 +4,8 @@ const mongoose = require("mongoose");
 
 mongoose
   .connect(process.env.DATABASE_URI)
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("Could not connect to MongoDB", err));
+  .then(() => console.log("Connecté à MongoDB"))
+  .catch((err) => console.error("Impossible de se connecter à MongoDB", err));
 
 const app = express();
 const cookieParser = require("cookie-parser");
@@ -19,7 +19,7 @@ app.use(express.json());
 app.use((error, req, res, next) => {
   res
     .status(error.status || 400)
-    .json({ message: error.message || "An error occurred" });
+    .json({ message: error.message || "Une erreur est survenue" });
 });
 
 app.use("/api/auth", userRoutes);
