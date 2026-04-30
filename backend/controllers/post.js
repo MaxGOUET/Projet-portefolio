@@ -1,12 +1,12 @@
 const Post = require("../models/Post");
 
-exports.allPosts = (req, res, next) => {
+exports.getAllPosts = (req, res, next) => {
   Post.find()
     .then((posts) => res.status(200).json(posts))
     .catch((error) => res.status(400).json({ error }));
 };
 
-exports.onePost = (req, res, next) => {
+exports.getPostById = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
     .then((post) => res.status(200).json(post))
     .catch((error) => res.status(400).json({ error }));
@@ -27,7 +27,7 @@ exports.createPost = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-exports.modifyPost = (req, res, next) => {
+exports.updatePost = (req, res, next) => {
   Post.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
     .then(() => res.status(200).json({ message: "Post updated successfully!" }))
     .catch((error) => res.status(400).json({ error }));
