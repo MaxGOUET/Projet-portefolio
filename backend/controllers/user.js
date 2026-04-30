@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-// Inscription d'un utilisateur
+// Inscription utilisateur
 exports.signup = async (req, res, next) => {
   bcrypt
     .hash(req.body.password, 10)
@@ -13,15 +13,13 @@ exports.signup = async (req, res, next) => {
       });
       user
         .save()
-        .then(() =>
-          res.status(201).json({ message: "User created successfully" }),
-        )
+        .then(() => this.login(req, res, next))
         .catch((error) => res.status(400).json({ error }));
     })
     .catch((error) => res.status(500).json({ error }));
 };
 
-// Connexion d'un utilisateur
+// Connexion utilisateur
 exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email })
     .then((user) => {
@@ -50,14 +48,14 @@ exports.login = (req, res, next) => {
             secure: true,
             maxAge: 24 * 60 * 60 * 1000,
           });
-          res.status(200).json({ message:"Connexion réussie !" });
+          res.status(200).json({ message: "Connexion réussie !" });
         })
         .catch((error) => res.status(500).json({ error }));
     })
     .catch((error) => res.status(500).json({ error }));
 };
 
-// Déconnexion d'un utilisateur
+// Déconnexion utilisateur
 exports.logout = (req, res, next) => {
   res.clearCookie("JWTtoken");
   res.status(200).json({ message: "Déconnexion réussie !" });
