@@ -60,3 +60,10 @@ exports.logout = (req, res, next) => {
   res.clearCookie("JWTtoken");
   res.status(200).json({ message: "Déconnexion réussie !" });
 };
+
+// Verification de l'authentification
+exports.verifyAuth = (req, res, next) => {
+  return res
+    .status(200)
+    .json({ message: "Utilisateur authentifié", authenticated: true });
+};

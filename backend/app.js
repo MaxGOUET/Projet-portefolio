@@ -37,6 +37,7 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 
 // Importation des routes utilisateur
 const userRoutes = require("./routes/user");
+const postRoutes = require("./routes/post");
 
 // Middlewares pour parser les cookies et les requêtes JSON
 app.use(cookieParser());
@@ -66,8 +67,9 @@ app.use((error, req, res, next) => {
     .json({ message: error.message || "Une erreur est survenue" });
 });
 
-// Route pour l'authentification des utilisateurs
-app.use("/api/auth", userRoutes);
+// Routes de l'application
+app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes);
 
 // Exporte l'application Express
 module.exports = app;
