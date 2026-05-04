@@ -1,4 +1,5 @@
 const Post = require("../models/Post");
+const fs = require("fs");
 
 exports.getAllPosts = (req, res, next) => {
   Post.find()
@@ -37,8 +38,13 @@ exports.updatePost = (req, res, next) => {
 
 exports.deletePost = (req, res, next) => {
   Post.deleteOne({ _id: req.params.id })
-    .then(() =>
-      res.status(200).json({ message: "Post supprimé avec succès !" }),
-    )
+    .then(() => {
+      fs.unlink(`images/${req.params.id}.webp`, (err) => {
+        if (err) {
+          console.error("Erreur lors de la suppression de l'image :", err);
+        }
+      });
+      res.status(200).json({ message: "Post supprimé avec succès !" });
+    })
     .catch((error) => res.status(400).json({ error }));
 };
