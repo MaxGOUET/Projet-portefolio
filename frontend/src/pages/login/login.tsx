@@ -24,6 +24,7 @@ function Login() {
 
   return (
     <div className="login-container">
+      <h1>Connexion</h1>
       <input
         type="email"
         value={email}
@@ -34,10 +35,20 @@ function Login() {
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
+        placeholder="Mot de passe"
       />
-      <button onClick={handleLogin}>Login</button>
       {error && <p>{error}</p>}
+      <div className="button-container">
+        <button className="login-button" onClick={handleLogin}>
+          Se connecter
+        </button>
+        <fieldset className="separator">
+          <legend>ou</legend>
+        </fieldset>
+        <button className="signup-button" onClick={() => navigate("/signup")}>
+          S'inscrire
+        </button>
+      </div>
     </div>
   );
 }

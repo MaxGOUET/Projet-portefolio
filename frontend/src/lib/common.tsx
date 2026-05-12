@@ -1,5 +1,7 @@
+const user_api_url = `${import.meta.env.VITE_API_URL}/users`;
+
 export async function getAuthUser() {
-  const url = "http://localhost:4000/api/users/isAuth";
+  const url = `${user_api_url}/isAuth`;
   const response = await fetch(url, {
     method: "GET",
     credentials: "include",
@@ -15,7 +17,7 @@ export async function loginUser({
   email: string;
   password: string;
 }) {
-  const url = "http://localhost:4000/api/users/login";
+  const url = `${user_api_url}/login`;
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -29,9 +31,29 @@ export async function loginUser({
 }
 
 export async function logoutUser() {
-  const url = "http://localhost:4000/api/users/logout";
+  const url = `${user_api_url}/logout`;
   const response = await fetch(url, {
     method: "POST",
+    credentials: "include",
+  });
+  const data = await response.json();
+  return data;
+}
+
+export async function signUpUser({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) {
+  const url = `${user_api_url}/signup`;
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
     credentials: "include",
   });
   const data = await response.json();
