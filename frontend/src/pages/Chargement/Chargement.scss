@@ -1,0 +1,32 @@
+#root {
+  width: 100%;
+  height: 100%;
+}
+.chargement-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #040404;
+
+  .loading {
+    font-size: 5rem;
+    color: white;
+  }
+
+  .loading-dot {
+    font-size: 5rem;
+    color: white;
+    animation: blink 1s infinite;
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}

@@ -15,10 +15,33 @@ mongoose
 // Création de l'application Express
 const app = express();
 
+// Middleware CORS pour gérer les requêtes cross-origin
+app.use((req, res, next) => {
+  // Autorise la requête depuis le frontend (localhost:5173)
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+  // Autoriser l'envoi de credentials (cookies, tokens)
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  // Définit les headers autorisés dans les requêtes
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization",
+  );
+  // Définit les méthodes HTTP autorisées
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+  );
+  // Gère les requêtes OPTIONS (préflight CORS)
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 // Configuration de Helmet pour sécuriser les headers HTTP
 app.use(
   helmet({
-    crossOriginResourcePolicy: { policy: "same-site" },
+    crossOriginResourcePolicy: { policy: "cross-origin" },
   }),
 );
 
@@ -32,33 +55,16 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
+// Middlewares pour parser les cookies et les requêtes JSON
+app.use(cookieParser());
+app.use(express.json());
+
 // Servir les fichiers statiques images depuis le dossier "images"
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 // Importation des routes utilisateur
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
-
-// Middlewares pour parser les cookies et les requêtes JSON
-app.use(cookieParser());
-app.use(express.json());
-
-// Middleware CORS pour gérer les requêtes cross-origin
-app.use((req, res, next) => {
-  // Autorise les requêtes depuis n'importe quelle origine
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  // Définit les headers autorisés dans les requêtes
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization",
-  );
-  // Définit les méthodes HTTP autorisées
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-  );
-  next();
-});
 
 // Middleware de gestion des erreurs - Capture toutes les erreurs renvoyées par l'application
 app.use((error, req, res, next) => {

@@ -43,12 +43,14 @@ exports.login = (req, res, next) => {
               expiresIn: "24h",
             },
           );
-          res.cookie("JWTtoken", JWTtoken, {
+          res.cookie(process.env.JWT_NAME, JWTtoken, {
             httpOnly: true,
             secure: true,
             maxAge: 24 * 60 * 60 * 1000,
           });
-          res.status(200).json({ message: "Connexion réussie !" });
+          res
+            .status(200)
+            .json({ message: "Connexion réussie !", authenticated: true });
         })
         .catch((error) => res.status(500).json({ error }));
     })
@@ -57,8 +59,10 @@ exports.login = (req, res, next) => {
 
 // Déconnexion utilisateur
 exports.logout = (req, res, next) => {
-  res.clearCookie("JWTtoken");
-  res.status(200).json({ message: "Déconnexion réussie !" });
+  res.clearCookie(process.env.JWT_NAME);
+  res
+    .status(200)
+    .json({ message: "Déconnexion réussie !", authenticated: false });
 };
 
 // Verification de l'authentification
