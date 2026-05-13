@@ -31,6 +31,7 @@ function SignUp() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
+        required
       />
       <input
         className="password"
@@ -38,6 +39,7 @@ function SignUp() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Mot de passe"
+        required
       />
       <input
         className={`confirm-password ${
@@ -47,6 +49,7 @@ function SignUp() {
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         placeholder="Confirmer le mot de passe"
+        required
       />
       {confirmPassword && password !== confirmPassword && (
         <p className="password-error">Les mots de passe ne correspondent pas</p>

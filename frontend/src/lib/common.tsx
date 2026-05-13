@@ -59,3 +59,12 @@ export async function signUpUser({
   const data = await response.json();
   return data;
 }
+
+export async function getLanguages(repoGithubUrl: string) {
+  const url = `https://api.github.com/repos/${repoGithubUrl}/languages`;
+  const response = await fetch(url, {
+    method: "GET",
+  });
+  const data = await response.json();
+  return data;
+}
