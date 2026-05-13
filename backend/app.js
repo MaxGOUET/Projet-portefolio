@@ -18,7 +18,7 @@ const app = express();
 // Middleware CORS pour gérer les requêtes cross-origin
 app.use((req, res, next) => {
   // Autorise la requête depuis le frontend (localhost:5173)
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+  res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
   // Autoriser l'envoi de credentials (cookies, tokens)
   res.setHeader("Access-Control-Allow-Credentials", "true");
   // Définit les headers autorisés dans les requêtes
@@ -66,16 +66,16 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
 
+// Routes de l'application
+app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes);
+
 // Middleware de gestion des erreurs - Capture toutes les erreurs renvoyées par l'application
 app.use((error, req, res, next) => {
   res
     .status(error.status || 400)
     .json({ message: error.message || "Une erreur est survenue" });
 });
-
-// Routes de l'application
-app.use("/api/users", userRoutes);
-app.use("/api/posts", postRoutes);
 
 // Exporte l'application Express
 module.exports = app;

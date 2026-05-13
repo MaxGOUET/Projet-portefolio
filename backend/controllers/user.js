@@ -2,8 +2,18 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
+const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 // Inscription utilisateur
 exports.signup = async (req, res, next) => {
+  if (req.body.email === undefined || !regexEmail.test(req.body.email)) {
+    return res.status(400).json({ error: "Email invalide" });
+  }
+  if (req.body.password === undefined || req.body.password.length < 8) {
+    return res
+      .status(400)
+      .json({ error: "Le mot de passe doit contenir au moins 8 caractères" });
+  }
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {

@@ -14,7 +14,8 @@ exports.getPostById = (req, res, next) => {
 };
 
 exports.createPost = (req, res, next) => {
-  const postObject = JSON.parse(req.body.post);
+  // const postObject = JSON.parse(req.body.post);
+  const postObject = req.body;
   delete postObject._id;
   delete postObject._userId;
   const post = new Post({
