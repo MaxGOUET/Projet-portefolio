@@ -70,6 +70,21 @@ export async function getLanguages(repoGithubUrl: string) {
   return data;
 }
 
+export async function getProjects() {
+  const url = post_api_url;
+  const response = await fetch(url, {
+    method: "GET",
+  });
+  const data = await response.json();
+  return data;
+}
+
+export async function getProjectById(id: string) {
+  const response = await fetch(`${post_api_url}/${id}`, { method: "GET" });
+  const data = await response.json();
+  return data;
+}
+
 export async function addProject(data: {
   title: string;
   url: string;

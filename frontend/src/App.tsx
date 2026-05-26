@@ -8,12 +8,14 @@ import Profil from "./pages/backoffice/Profil/Profil";
 import RemoveProject from "./pages/backoffice/RemoveProject/RemoveProject";
 import ModifyProject from "./pages/backoffice/ModifyProject/ModifyProject";
 import AddProject from "./pages/backoffice/AddProject/AddProject";
+import Project from "./pages/Project/Project";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Accueil />} />
+        <Route path="/project/:projectId" element={<Project />} />
         <Route path="/login" element={<Login />} />
         <Route path="/backoffice" element={<BackOffice />}>
           <Route path="add-project" element={<AddProject />} />

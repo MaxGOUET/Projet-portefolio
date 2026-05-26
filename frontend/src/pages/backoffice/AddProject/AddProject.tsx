@@ -1,7 +1,8 @@
 import { addProject } from "../../../lib/common";
+import "./AddProject.scss";
 
 function AddProject() {
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     await addProject({
@@ -13,21 +14,29 @@ function AddProject() {
   };
 
   return (
-    <div>
+    <div className="form-add-container">
       <h1>Ajouter un projet</h1>
       <form action="add-project" onSubmit={handleSubmit}>
-        <label htmlFor="project-name">Titre du projet:</label>
-        <input type="text" id="project-name" name="title" required />
-        <label htmlFor="project-url">URL du projet:</label>
-        <input type="url" id="project-url" name="url" required />
-        <label htmlFor="project-description">Description du projet:</label>
-        <textarea
-          id="project-description"
-          name="description"
-          required
-        ></textarea>
-        <label htmlFor="project-github">URL GitHub du projet:</label>
-        <input type="url" id="project-github" name="repoGithubUrl" required />
+        <span className="title">
+          <label htmlFor="project-name">Titre du projet:</label>
+          <input type="text" id="project-name" name="title" required />
+        </span>
+        <span className="url">
+          <label htmlFor="project-url">URL du projet:</label>
+          <input type="url" id="project-url" name="url" required />
+        </span>
+        <span className="description">
+          <label htmlFor="project-description">Description du projet:</label>
+          <textarea
+            id="project-description"
+            name="description"
+            required
+          ></textarea>
+        </span>
+        <span className="github">
+          <label htmlFor="project-github">URL GitHub du projet:</label>
+          <input type="url" id="project-github" name="repoGithubUrl" required />
+        </span>
         <button type="submit">Ajouter le projet</button>
       </form>
     </div>

@@ -3,15 +3,13 @@ import "./backoffice.scss";
 import "../../index.css";
 import NavBackOffice from "../../components/NavBackOffice/NavBackOffice";
 import { getAuthUser } from "../../lib/common";
-import Chargement from "../Loading/Loading";
 import { Navigate } from "react-router-dom";
-// import { getLanguages } from "../../lib/common";
 import { useEffect, useState } from "react";
 import AddProject from "./AddProject/AddProject";
 import ModifyProject from "./ModifyProject/ModifyProject";
 import RemoveProject from "./RemoveProject/RemoveProject";
 import Profil from "./Profil/Profil";
-// import Tags from "../../components/Tags/Tags";
+import Loading from "../Loading/Loading";
 function BackOffice() {
   const [authenticated, setAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -28,47 +26,8 @@ function BackOffice() {
     });
   }, []);
 
-  // type Language = { name: string; percentage: number };
-  // const fontAwesomeIcons: Record<string, string> = {
-  //   javascript: "js",
-  //   typescript: "typescript",
-  //   python: "py",
-  //   html: "html5",
-  //   css: "css3",
-  //   java: "java",
-  //   scss: "sass",
-  //   symfony: "symfony",
-  //   php: "php",
-  //   react: "react",
-  //   node: "node",
-  // };
-  // const [languages, setLanguages] = useState<Language[]>([]);
-
-  // useEffect(() => {
-  //   const fetchLanguages = async () => {
-  //     try {
-  //       const data = await getLanguages("MaxGOUET/Projet_5_Kasa");
-  //       const total = Object.values(data as Record<string, number>).reduce(
-  //         (sum, v) => sum + v,
-  //         0,
-  //       );
-  //       const languagesWithPercent: Language[] = Object.entries(
-  //         data as Record<string, number>,
-  //       ).map(([name, value]) => ({
-  //         name,
-  //         percentage: parseFloat(((value / total) * 100).toFixed(1)),
-  //       }));
-  //       setLanguages(languagesWithPercent);
-  //     } catch (error) {
-  //       console.error("Error fetching languages:", error);
-  //     }
-  //   };
-
-  //   fetchLanguages();
-  // }, []);
-
   if (isLoading) {
-    return <Chargement />;
+    return <Loading />;
   }
 
   if (authenticated) {

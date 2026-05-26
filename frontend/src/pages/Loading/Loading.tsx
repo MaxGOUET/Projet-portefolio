@@ -1,4 +1,4 @@
-import "./Chargement.scss";
+import "./loading.scss";
 
 function Chargement() {
   return (
