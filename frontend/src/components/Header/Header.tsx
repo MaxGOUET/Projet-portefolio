@@ -63,9 +63,13 @@ function Header() {
         </nav>
         <button className="dark-mode-toggle" onClick={toggleDarkMode}>
           {darkMode ? (
-            <i className="fa-solid fa-sun"></i>
+            <span key="sun">
+              <i className="fa-solid fa-sun"></i>
+            </span>
           ) : (
-            <i className="fa-solid fa-moon"></i>
+            <span key="moon">
+              <i className="fa-solid fa-moon"></i>
+            </span>
           )}
         </button>
       </div>
