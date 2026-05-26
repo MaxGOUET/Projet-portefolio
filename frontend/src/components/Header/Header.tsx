@@ -3,9 +3,11 @@ import "./Header.scss";
 import { NavLink } from "react-router-dom";
 
 function Header() {
-  const [darkMode, setDarkMode] = useState(
-    () => window.matchMedia("(prefers-color-scheme: dark)").matches,
-  );
+  const [darkMode, setDarkMode] = useState(() => {
+    const theme = document.documentElement.getAttribute("data-theme");
+    if (theme) return theme === "dark";
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
   const toggleDarkMode = () => {
     const next = !darkMode;
     setDarkMode(next);

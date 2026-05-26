@@ -2,7 +2,11 @@ import { logoutUser } from "../../lib/common";
 import { useNavigate } from "react-router-dom";
 import "./NavBackOffice.scss";
 
-function NavBackOffice() {
+interface NavBackOfficeProps {
+  onSelect: (value: string) => void;
+}
+
+function NavBackOffice({ onSelect }: NavBackOfficeProps) {
   const navigate = useNavigate();
   const handleLogout = async () => {
     await logoutUser().then((data) => {
@@ -19,10 +23,16 @@ function NavBackOffice() {
       <h1>Back Office</h1>
       <button onClick={handleLogout}>Logout</button>
       <div className="back-office-menu">
-        <p>Ajouter un projet</p>
-        <p>Modifier un projet</p>
-        <p>Supprimer un projet</p>
-        <p>Profil</p>
+        <button onClick={() => onSelect("add-project")}>
+          Ajouter un projet
+        </button>
+        <button onClick={() => onSelect("modify-project")}>
+          Modifier un projet
+        </button>
+        <button onClick={() => onSelect("remove-project")}>
+          Supprimer un projet
+        </button>
+        <button onClick={() => onSelect("profil")}>Profil</button>
       </div>
     </div>
   );
