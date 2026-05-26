@@ -1,4 +1,5 @@
 const user_api_url = `${import.meta.env.VITE_API_URL}/users`;
+const post_api_url = `${import.meta.env.VITE_API_URL}/posts`;
 
 export async function getAuthUser() {
   const url = `${user_api_url}/isAuth`;
@@ -67,4 +68,33 @@ export async function getLanguages(repoGithubUrl: string) {
   });
   const data = await response.json();
   return data;
+}
+
+export async function addProject(data: {
+  title: string;
+  url: string;
+  description: string;
+  repoGithubUrl: string;
+}) {
+  const userId = localStorage.getItem("userId");
+  const project = {
+    userId,
+    title: data.title,
+    url: data.url,
+    description: data.description,
+    repoGithubUrl: data.repoGithubUrl,
+  };
+  const bodyFormData = new FormData();
+  bodyFormData.append("post", JSON.stringify(project));
+
+  try {
+    return await fetch(post_api_url, {
+      method: "POST",
+      body: bodyFormData,
+      credentials: "include",
+    });
+  } catch (error) {
+    console.error(error);
+    return { error: true, message: error };
+  }
 }
