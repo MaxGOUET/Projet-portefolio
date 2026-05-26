@@ -3,7 +3,7 @@ import "./backoffice.scss";
 import "../../index.css";
 import NavBackOffice from "../../components/NavBackOffice/NavBackOffice";
 import { getAuthUser } from "../../lib/common";
-import Chargement from "../Chargement/Chargement";
+import Chargement from "../Loading/Loading";
 import { Navigate } from "react-router-dom";
 // import { getLanguages } from "../../lib/common";
 import { useEffect, useState } from "react";

@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Accueil from "./pages/Accueil/accueil";
-import Login from "./pages/login/login";
-import BackOffice from "./pages/backoffice/backoffice";
-import Chargement from "./pages/Chargement/Chargement";
+import Accueil from "./pages/Accueil/Accueil";
+import Login from "./pages/Login/Login";
+import BackOffice from "./pages/backoffice/Backoffice";
+import Chargement from "./pages/Loading/Loading";
 import SignUp from "./pages/SignUp/SignUp";
 import Profil from "./pages/backoffice/Profil/Profil";
 import RemoveProject from "./pages/backoffice/RemoveProject/RemoveProject";
