@@ -2,6 +2,7 @@ import { loginUser } from "../../lib/common";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./login.scss";
+import Header from "../../components/Header/Header";
 
 function Login() {
   const navigate = useNavigate();
@@ -23,33 +24,36 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
-      <h1>Connexion</h1>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Mot de passe"
-      />
-      {error && <p>{error}</p>}
-      <div className="button-container">
-        <button className="login-button" onClick={handleLogin}>
-          Se connecter
-        </button>
-        <fieldset className="separator">
-          <legend>ou</legend>
-        </fieldset>
-        <button className="signup-button" onClick={() => navigate("/signup")}>
-          S'inscrire
-        </button>
+    <>
+      <Header />
+      <div className="login-container">
+        <h1>Connexion</h1>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Mot de passe"
+        />
+        {error && <p>{error}</p>}
+        <div className="button-container">
+          <button className="login-button" onClick={handleLogin}>
+            Se connecter
+          </button>
+          <fieldset className="separator">
+            <legend>ou</legend>
+          </fieldset>
+          <button className="signup-button" onClick={() => navigate("/signup")}>
+            S'inscrire
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

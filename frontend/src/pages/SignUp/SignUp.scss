@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #f0f0f0;
+  background-color: var(--bg);
 
   input {
     margin: 10px 0;
@@ -12,8 +12,8 @@
     width: 300px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: white;
-    color: #333;
+    background-color: var(--bg-secondary);
+    color: var(--text);
 
     &.error {
       border: 2px solid #dc3545;
@@ -36,27 +36,21 @@
 
     .separator {
       border: none;
-      border-top: 2px solid #000000;
+      border-top: 2px solid var(--text);
       height: 0.5rem;
       text-align: center;
       width: 50%;
       align-self: center;
-      @media (prefers-color-scheme: dark) {
-        border-top: 2px solid #f0f0f0;
-      }
       legend {
         padding: 0 2rem;
         font-size: 1rem;
-        color: #333;
-        @media (prefers-color-scheme: dark) {
-          color: #f0f0f0;
-        }
+        color: var(--text);
       }
     }
     button {
       padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
+      background-color: var(--btn-bg);
+      color: var(--btn-text);
       border: none;
       border-radius: 5px;
       cursor: pointer;
@@ -64,22 +58,22 @@
       align-self: center;
 
       &:hover {
-        background-color: #0056b3;
+        background-color: var(--btn-bg-hover);
       }
 
       &:disabled {
-        background-color: #ccc;
+        background-color: var(--btn-bg-disabled);
         cursor: not-allowed;
       }
     }
   }
 
   @media (prefers-color-scheme: dark) {
-    background-color: #121212;
+    background-color: var(--bg);
 
     input {
-      background-color: #1e1e1e;
-      color: #f0f0f0;
+      background-color: var(--bg);
+      color: var(--text);
       border: 1px solid #333;
 
       &.error {
@@ -93,15 +87,15 @@
     }
 
     button {
-      background-color: #0d27a8;
-      color: white;
+      background-color: var(--btn-bg);
+      color: var(--btn-text);
 
       &:hover {
-        background-color: #0056b3;
+        background-color: var(--btn-bg-hover);
       }
 
       &:disabled {
-        background-color: #555;
+        background-color: var(--btn-bg-disabled);
         cursor: not-allowed;
       }
     }

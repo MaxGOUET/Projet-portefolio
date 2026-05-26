@@ -1,11 +1,20 @@
 import "./Tags.scss";
 
-function Tags({ tags }: { tags: string[] }) {
+function Tags({
+  tags,
+  name,
+  value,
+}: {
+  tags: string[];
+  name: string[];
+  value: number[];
+}) {
   return (
-    <div className="tagsContainer">
+    <div className="tags-container">
       {tags.map((tag, index) => (
         <div key={index} className="tag">
-          {tag}
+          <i className={`fa-brands fa-${name[index]?.toLowerCase()}`}></i>
+          <p>{`${tag} (${value[index]}%)`}</p>
         </div>
       ))}
     </div>
