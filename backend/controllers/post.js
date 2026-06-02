@@ -5,7 +5,6 @@ const {
   fetchGithubRepoLanguages,
 } = require("../services/github");
 const fs = require("fs");
-const { time } = require("console");
 
 exports.getAllPosts = (req, res, next) => {
   Post.find()
@@ -33,7 +32,6 @@ exports.createPost = async (req, res, next) => {
     .then(async () => {
       const repoGithubUrlSplited = postObject.repoGithubUrl.split(".com/")[1];
       const languages = new GithubLanguages({
-        userId: req.auth.userId,
         repoGithubUrl: postObject.repoGithubUrl,
         languages: await fetchGithubRepoLanguages(repoGithubUrlSplited),
         date: new Date(),
