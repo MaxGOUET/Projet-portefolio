@@ -8,7 +8,12 @@ export async function getAuthUser() {
     credentials: "include",
   });
   const data = await response.json();
-  return data;
+  try {
+    return data;
+  } catch (error) {
+    console.error(error);
+    return { error: true, message: error };
+  }
 }
 
 export async function loginUser({
@@ -28,7 +33,12 @@ export async function loginUser({
     credentials: "include",
   });
   const data = await response.json();
-  return data;
+  try {
+    return data;
+  } catch (error) {
+    console.error(error);
+    return { error: true, message: error };
+  }
 }
 
 export async function logoutUser() {
@@ -38,7 +48,12 @@ export async function logoutUser() {
     credentials: "include",
   });
   const data = await response.json();
-  return data;
+  try {
+    return data;
+  } catch (error) {
+    console.error(error);
+    return { error: true, message: error };
+  }
 }
 
 export async function signUpUser({
@@ -58,16 +73,30 @@ export async function signUpUser({
     credentials: "include",
   });
   const data = await response.json();
-  return data;
+  try {
+    return data;
+  } catch (error) {
+    console.error(error);
+    return { error: true, message: error };
+  }
 }
 
 export async function getLanguages(repoGithubUrl: string) {
-  const url = `https://api.github.com/repos/${repoGithubUrl}/languages`;
+  const url = `${import.meta.env.VITE_API_URL}/services/github/languages`;
   const response = await fetch(url, {
-    method: "GET",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ repoGithubUrl }),
   });
   const data = await response.json();
-  return data;
+  try {
+    return data;
+  } catch (error) {
+    console.error(error);
+    return { error: true, message: error };
+  }
 }
 
 export async function getProjects() {
@@ -76,16 +105,26 @@ export async function getProjects() {
     method: "GET",
   });
   const data = await response.json();
-  return data;
+  try {
+    return data;
+  } catch (error) {
+    console.error(error);
+    return { error: true, message: error };
+  }
 }
 
 export async function getProjectById(id: string) {
   const response = await fetch(`${post_api_url}/${id}`, { method: "GET" });
   const data = await response.json();
-  return data;
+  try {
+    return data;
+  } catch (error) {
+    console.error(error);
+    return { error: true, message: error };
+  }
 }
 
-export async function addProject(data: {
+export async function postProject(data: {
   title: string;
   url: string;
   description: string;

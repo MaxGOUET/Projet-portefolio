@@ -1,16 +1,30 @@
-import { addProject } from "../../../lib/common";
+import { useState } from "react";
+import { postProject } from "../../../lib/common";
 import "./AddProject.scss";
 
 function AddProject() {
+  const [responseOk, setResponseOk] = useState("");
   const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    await addProject({
+    await postProject({
       title: formData.get("title") as string,
       url: formData.get("url") as string,
       description: formData.get("description") as string,
       repoGithubUrl: formData.get("repoGithubUrl") as string,
     });
+    if (!postProject) {
+      setResponseOk("error");
+      setTimeout(() => {
+        setResponseOk("");
+      }, 3000);
+      return;
+    }
+    event.target.reset();
+    setResponseOk("success");
+    setTimeout(() => {
+      setResponseOk("");
+    }, 3000);
   };
 
   return (
@@ -39,6 +53,10 @@ function AddProject() {
         </span>
         <button type="submit">Ajouter le projet</button>
       </form>
+      {(responseOk === "success" && <p>Projet ajouté avec succès !</p>) ||
+        (responseOk === "error" && (
+          <p>Une erreur est survenue lors de l'ajout du projet.</p>
+        ))}
     </div>
   );
 }

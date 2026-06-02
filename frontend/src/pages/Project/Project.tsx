@@ -22,9 +22,9 @@ function Project() {
     });
   }, []);
 
-  const { itemId } = useParams();
+  const { projectId } = useParams();
   const project: Project | undefined = projects.find(
-    (project) => project._id === itemId,
+    (project) => project._id === projectId,
   );
   if (isLoading) {
     return <Loading />;

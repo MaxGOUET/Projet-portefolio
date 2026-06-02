@@ -27,7 +27,7 @@ function Accueil() {
             key={p._id}
             imgSrc={p.imageUrl}
             title={p.title}
-            itemId={p._id}
+            projectId={p._id}
             description={p.description}
             repoGithubUrl={p.repoGithubUrl.split(".com/")[1] ?? ""}
           />

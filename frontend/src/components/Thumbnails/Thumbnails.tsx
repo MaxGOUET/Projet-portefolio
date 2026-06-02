@@ -6,19 +6,19 @@ import { NavLink } from "react-router-dom";
 function Thumbnails({
   imgSrc,
   title,
-  itemId,
+  projectId,
   description,
   repoGithubUrl,
 }: {
   imgSrc: string;
   title: string;
-  itemId: string;
+  projectId: string;
   description: string;
   repoGithubUrl: string;
 }) {
   return (
     <>
-      <NavLink to={`/project/${itemId}`}>
+      <NavLink to={`/project/${projectId}`}>
         <div className="thumbnails">
           <img src={imgSrc} alt={`${title}-image`} />
           <h2>{title}</h2>
