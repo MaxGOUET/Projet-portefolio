@@ -15,7 +15,7 @@ exports.getGithubRepoLanguages = async (req, res) => {
             .deleteOne({ repoGithubUrl: repoGithub })
             .catch((error) => {
               console.error(
-                "Une erreur est survenue lors de la suppression des anciennes langues GitHub :",
+                "Une erreur est survenue lors de la suppression des languages :",
                 error,
               );
             });
@@ -44,15 +44,13 @@ exports.getGithubRepoLanguages = async (req, res) => {
               res.json(data);
             } catch (error) {
               console.error(
-                "une erreur est survenue lors de la récupération des langues du dépôt GitHub :",
+                "une erreur est survenue lors de la récupération des languages du dépôt GitHub :",
                 error,
               );
-              res
-                .status(500)
-                .json({
-                  error:
-                    "Une erreur est survenue lors de la récupération des langues du dépôt GitHub",
-                });
+              res.status(500).json({
+                error:
+                  "Une erreur est survenue lors de la récupération des languages du dépôt GitHub",
+              });
             }
           };
           fetchLanguages();
@@ -61,15 +59,13 @@ exports.getGithubRepoLanguages = async (req, res) => {
     })
     .catch((error) => {
       console.error(
-        "une erreur est survenue lors de la récupération des langues GitHub depuis la base de données :",
+        "une erreur est survenue lors de la récupération des languages depuis la base de données :",
         error,
       );
-      res
-        .status(500)
-        .json({
-          error:
-            "Une erreur est survenue lors de la récupération des langues GitHub depuis la base de données",
-        });
+      res.status(500).json({
+        error:
+          "Une erreur est survenue lors de la récupération des languages depuis la base de données",
+      });
     });
 };
 
@@ -92,11 +88,11 @@ exports.fetchGithubRepoLanguages = async (repoGithubUrl) => {
     return data;
   } catch (error) {
     console.error(
-      "une erreur est survenue lors de la récupération des langues du dépôt GitHub :",
+      "une erreur est survenue lors de la récupération des languages du dépôt GitHub :",
       error,
     );
     throw new Error(
-      "Une erreur est survenue lors de la récupération des langues du dépôt GitHub",
+      "Une erreur est survenue lors de la récupération des languages du dépôt GitHub",
     );
   }
 };
@@ -110,10 +106,10 @@ exports.saveGithubRepoLanguages = async (userId, repoGithubUrl, languages) => {
       date: new Date(),
     });
     await githubLanguages.save();
-    console.log("Langages GitHub enregistrés avec succès !");
+    console.log("Languages enregistrés avec succès !");
   } catch (error) {
     console.error(
-      "Une erreur est survenue lors de l'enregistrement des langues GitHub :",
+      "Une erreur est survenue lors de l'enregistrement des languages :",
       error,
     );
   }

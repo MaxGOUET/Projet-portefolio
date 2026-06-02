@@ -29,7 +29,7 @@ function Accueil() {
             title={p.title}
             projectId={p._id}
             description={p.description}
-            repoGithubUrl={p.repoGithubUrl.split(".com/")[1] ?? ""}
+            repoGithubUrl={p.repoGithubUrl}
           />
         ))}
       </div>
