@@ -65,10 +65,12 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 // Importation des routes utilisateur
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
+const servicesRoutes = require("./routes/services");
 
 // Routes de l'application
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/services", servicesRoutes);
 
 // Middleware de gestion des erreurs - Capture toutes les erreurs renvoyées par l'application
 app.use((error, req, res, next) => {

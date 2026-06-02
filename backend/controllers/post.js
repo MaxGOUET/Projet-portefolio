@@ -1,5 +1,11 @@
 const Post = require("../models/Post");
+const GithubLanguages = require("../models/GithubLanguages").GithubLanguages;
+const {
+  saveGithubRepoLanguages,
+  fetchGithubRepoLanguages,
+} = require("../services/github");
 const fs = require("fs");
+const { time } = require("console");
 
 exports.getAllPosts = (req, res, next) => {
   Post.find()
@@ -13,7 +19,7 @@ exports.getPostById = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-exports.createPost = (req, res, next) => {
+exports.createPost = async (req, res, next) => {
   const postObject = JSON.parse(req.body.post);
   delete postObject._id;
   delete postObject._userId;
@@ -24,8 +30,23 @@ exports.createPost = (req, res, next) => {
   });
   post
     .save()
+    .then(async () => {
+      const repoGithubUrlSplited = postObject.repoGithubUrl.split(".com/")[1];
+      const languages = new GithubLanguages({
+        userId: req.auth.userId,
+        repoGithubUrl: postObject.repoGithubUrl,
+        languages: await fetchGithubRepoLanguages(repoGithubUrlSplited),
+        date: new Date(),
+      });
+      await languages.save();
+    })
     .then(() => res.status(201).json({ message: "Post créé avec succès !" }))
-    .catch((error) => res.status(400).json({ error }));
+
+    .catch((error) =>
+      res
+        .status(400)
+        .json({ message: error.message || "Une erreur est survenue" }),
+    );
 };
 
 exports.updatePost = (req, res, next) => {
