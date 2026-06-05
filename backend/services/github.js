@@ -1,72 +1,38 @@
-const GithubLanguages = require("../models/GithubLanguages").GithubLanguages;
+const GithubLanguages = require("../models/GithubLanguages");
 
 exports.getGithubRepoLanguages = async (req, res) => {
   const repoGithub = req.body.repoGithubUrl;
   const repoGithubUrlSplited = repoGithub.split(".com/")[1];
-  GithubLanguages.findOne({ repoGithubUrl: repoGithub })
-    .then((githubLanguages) => {
-      if (githubLanguages) {
-        const timeDifference = new Date() - new Date(githubLanguages.date);
-        const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
-        if (daysDifference < 7) {
-          res.json(githubLanguages.languages);
-        } else {
-          githubLanguages
-            .deleteOne({ repoGithubUrl: repoGithub })
-            .catch((error) => {
-              console.error(
-                "Une erreur est survenue lors de la suppression des languages :",
-                error,
-              );
-            });
-          const fetchLanguages = async () => {
-            try {
-              const response = await fetch(
-                `${process.env.REPO_GITHUB_API_URL}${repoGithubUrlSplited}/languages`,
-                {
-                  headers: {
-                    Authorization: `token ${process.env.GITHUB_ACCESS_TOKEN}`,
-                  },
-                },
-              );
-              if (!response.ok) {
-                throw new Error(
-                  `HTTP error! status: ${response.status}, message: ${response.statusText}`,
-                );
-              }
-              const data = await response.json();
-              const newGithubLanguages = new GithubLanguages({
-                repoGithubUrl: repoGithub,
-                languages: data,
-                date: new Date(),
-              });
-              await newGithubLanguages.save();
-              res.json(data);
-            } catch (error) {
-              console.error(
-                "une erreur est survenue lors de la récupération des languages du dépôt GitHub :",
-                error,
-              );
-              res.status(500).json({
-                error:
-                  "Une erreur est survenue lors de la récupération des languages du dépôt GitHub",
-              });
-            }
-          };
-          fetchLanguages();
-        }
-      }
-    })
-    .catch((error) => {
-      console.error(
-        "une erreur est survenue lors de la récupération des languages depuis la base de données :",
-        error,
-      );
-      res.status(500).json({
-        error:
-          "Une erreur est survenue lors de la récupération des languages depuis la base de données",
-      });
+  try {
+    // verification de la presence des languages dans la base de données et de leur ancienneté
+    const githubLanguages = await GithubLanguages.findOne({
+      repoGithubUrl: repoGithub,
     });
+    if (!githubLanguages) {
+      // Aucun enregistrement trouvé, on fetch directement depuis GitHub
+      const data = await exports.fetchGithubRepoLanguages(repoGithubUrlSplited);
+      await exports.saveGithubRepoLanguages(repoGithub, data);
+      return res.json(data);
+    }
+    const timeDifference = new Date() - new Date(githubLanguages.date);
+    const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+    if (daysDifference < 7) {
+      return res.json(githubLanguages.languages);
+    }
+    // suppression des languages trop anciens de la base de données avant d'enregistrer les nouveaux
+    await githubLanguages.deleteOne({ repoGithubUrl: repoGithub });
+    const data = await exports.fetchGithubRepoLanguages(repoGithubUrlSplited);
+    await exports.saveGithubRepoLanguages(repoGithub, data);
+    return res.json(data);
+  } catch (error) {
+    console.error(
+      "une erreur est survenue lors de la récupération des languages :",
+      error,
+    );
+    res.status(500).json({
+      error: "Une erreur est survenue lors de la récupération des languages",
+    });
+  }
 };
 
 exports.fetchGithubRepoLanguages = async (repoGithubUrl) => {
@@ -97,10 +63,9 @@ exports.fetchGithubRepoLanguages = async (repoGithubUrl) => {
   }
 };
 
-exports.saveGithubRepoLanguages = async (userId, repoGithubUrl, languages) => {
+exports.saveGithubRepoLanguages = async (repoGithubUrl, languages) => {
   try {
     const githubLanguages = new GithubLanguages({
-      userId,
       repoGithubUrl,
       languages,
       date: new Date(),

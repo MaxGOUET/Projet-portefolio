@@ -46,14 +46,14 @@ app.use(
 );
 
 // Configuration du limiteur de requêtes pour prévenir les attaques par force brute
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // Fenêtre de temps: 15 minutes
-  limit: 100, // Limite de 100 requêtes par IP par fenêtre de temps
-  standardHeaders: true, // Retourne les infos de rate limit dans les headers RateLimit-*
-  legacyHeaders: false, // Désactive les headers X-RateLimit-*
-  ipv6Subnet: 56, // Configuration du subnet IPv6
-});
-app.use(limiter);
+// const limiter = rateLimit({
+//   windowMs: 15 * 60 * 1000, // Fenêtre de temps: 15 minutes
+//   limit: 100, // Limite de 100 requêtes par IP par fenêtre de temps
+//   standardHeaders: true, // Retourne les infos de rate limit dans les headers RateLimit-*
+//   legacyHeaders: false, // Désactive les headers X-RateLimit-*
+//   ipv6Subnet: 56, // Configuration du subnet IPv6
+// });
+// app.use(limiter);
 
 // Middlewares pour parser les cookies et les requêtes JSON
 app.use(cookieParser());

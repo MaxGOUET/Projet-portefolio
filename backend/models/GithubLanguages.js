@@ -6,7 +6,4 @@ const githubLanguagesSchema = mongoose.Schema({
   date: { type: Date, required: true },
 });
 
-exports.GithubLanguages = mongoose.model(
-  "GithubLanguages",
-  githubLanguagesSchema,
-);
+module.exports = mongoose.model("GithubLanguages", githubLanguagesSchema);

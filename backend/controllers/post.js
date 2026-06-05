@@ -1,5 +1,5 @@
 const Post = require("../models/Post");
-const GithubLanguages = require("../models/GithubLanguages").GithubLanguages;
+const GithubLanguages = require("../models/GithubLanguages");
 const {
   saveGithubRepoLanguages,
   fetchGithubRepoLanguages,
