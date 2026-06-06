@@ -1,8 +1,10 @@
 import { useState } from "react";
 import "./Header.scss";
 import { NavLink } from "react-router-dom";
+import Modale from "../Modale/Modale";
 
 function Header() {
+  const [isModaleOpen, setIsModaleOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
     const theme = document.documentElement.getAttribute("data-theme");
     if (theme) return theme === "dark";
@@ -23,6 +25,9 @@ function Header() {
         <img src="#" alt="Logo" className="logo" />
       </div>
       <div className="header-content">
+        <div className="burger-menu" onClick={() => setIsModaleOpen(true)}>
+          <i className="fa-solid fa-bars"></i>
+        </div>
         <nav className="header-nav">
           <NavLink
             to="/"
@@ -75,6 +80,7 @@ function Header() {
           )}
         </button>
       </div>
+      <Modale isOpen={isModaleOpen} onClose={() => setIsModaleOpen(false)} />
     </div>
   );
 }
