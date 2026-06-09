@@ -7,6 +7,7 @@ import SignUp from "./pages/SignUp/SignUp";
 import Profil from "./pages/backoffice/Profil/Profil";
 import RemoveProject from "./pages/backoffice/RemoveProject/RemoveProject";
 import ModifyProject from "./pages/backoffice/ModifyProject/ModifyProject";
+import ModifyProjectId from "./pages/backoffice/ModifyProject/ModifyProjectId";
 import AddProject from "./pages/backoffice/AddProject/AddProject";
 import Project from "./pages/Project/Project";
 
@@ -19,7 +20,13 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/backoffice" element={<BackOffice />}>
           <Route path="add-project" element={<AddProject />} />
-          <Route path="modify-project" element={<ModifyProject />} />
+          <Route path="modify-project" element={<ModifyProject />}>
+            <Route
+              path="modify-project/:projectId"
+              element={<ModifyProjectId />}
+            />
+          </Route>
+
           <Route path="remove-project" element={<RemoveProject />} />
           <Route path="profil" element={<Profil />} />
         </Route>

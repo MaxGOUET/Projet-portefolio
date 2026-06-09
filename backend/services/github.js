@@ -79,3 +79,15 @@ exports.saveGithubRepoLanguages = async (repoGithubUrl, languages) => {
     );
   }
 };
+
+exports.deleteOneGithubRepoLanguages = async (repoGithubUrl) => {
+  try {
+    await GithubLanguages.deleteOne({ repoGithubUrl });
+    console.log("Languages supprimés avec succès !");
+  } catch (error) {
+    console.error(
+      "Une erreur est survenue lors de la suppression des languages :",
+      error,
+    );
+  }
+};

@@ -3,6 +3,7 @@ const GithubLanguages = require("../models/GithubLanguages");
 const {
   saveGithubRepoLanguages,
   fetchGithubRepoLanguages,
+  deleteOneGithubRepoLanguages,
 } = require("../services/github");
 const fs = require("fs");
 
@@ -49,20 +50,32 @@ exports.createPost = async (req, res, next) => {
 
 exports.updatePost = (req, res, next) => {
   Post.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-    .then(() =>
-      res.status(200).json({ message: "Post mis à jour avec succès !" }),
-    )
+    .then(async () => {
+      const post = await fetchGithubRepoLanguages({
+        repoGithubUrl: req.body.repoGithubUrl,
+      });
+      if (post === null) {
+        const repoGithubUrlSplited = req.body.repoGithubUrl.split(".com/")[1];
+        await saveGithubRepoLanguages(repoGithubUrlSplited);
+      }
+      res.status(200).json({ message: "Post mis à jour avec succès !" });
+    })
     .catch((error) => res.status(400).json({ error }));
 };
 
 exports.deletePost = (req, res, next) => {
   Post.deleteOne({ _id: req.params.id })
-    .then(() => {
+    .then(async () => {
       fs.unlink(`images/${req.params.id}.webp`, (err) => {
         if (err) {
           console.error("Erreur lors de la suppression de l'image :", err);
         }
       });
+      const post = await Post.findOne({ _id: req.params.id });
+      if (post && post.repoGithubUrl) {
+        const repoGithubUrlSplited = post.repoGithubUrl.split(".com/")[1];
+        await deleteOneGithubRepoLanguages(repoGithubUrlSplited);
+      }
       res.status(200).json({ message: "Post supprimé avec succès !" });
     })
     .catch((error) => res.status(400).json({ error }));
