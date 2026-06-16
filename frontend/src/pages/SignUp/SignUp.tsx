@@ -2,7 +2,6 @@ import { useState } from "react";
 import { signUpUser } from "../../lib/common";
 import { useNavigate } from "react-router-dom";
 import "./SignUp.scss";
-import Header from "../../components/Header/Header";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -26,7 +25,6 @@ function SignUp() {
 
   return (
     <>
-      <Header />
       <div className="signUp-form-container">
         <h1>Inscription</h1>
         <input

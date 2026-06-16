@@ -48,12 +48,6 @@ function Header() {
             Contact
           </NavLink>
           <NavLink
-            to="/backoffice"
-            className={({ isActive }) => (isActive ? "active" : "")}
-          >
-            Back Office
-          </NavLink>
-          <NavLink
             to="https://www.github.com/MaxGOUET"
             target="_blank"
             rel="noopener noreferrer"
@@ -79,6 +73,12 @@ function Header() {
             </span>
           )}
         </button>
+        <NavLink
+          to="/backoffice"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
+          <i className="fa-solid fa-lock"></i>
+        </NavLink>
       </div>
       <Modale isOpen={isModaleOpen} onClose={() => setIsModaleOpen(false)} />
     </div>

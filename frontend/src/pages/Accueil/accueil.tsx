@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Header from "../../components/Header/Header";
 import Thumbnails from "../../components/Thumbnails/Thumbnails";
 import { getProjects } from "../../lib/common";
 
@@ -20,7 +19,6 @@ function Accueil() {
 
   return (
     <>
-      <Header />
       <div className="accueil">
         {projects.map((p) => (
           <Thumbnails

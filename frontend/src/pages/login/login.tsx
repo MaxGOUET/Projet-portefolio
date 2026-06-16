@@ -2,7 +2,6 @@ import { loginUser } from "../../lib/common";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./login.scss";
-import Header from "../../components/Header/Header";
 
 function Login() {
   const navigate = useNavigate();
@@ -25,7 +24,6 @@ function Login() {
 
   return (
     <>
-      <Header />
       <div className="login-container">
         <h1>Connexion</h1>
         <input
