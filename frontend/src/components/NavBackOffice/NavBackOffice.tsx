@@ -13,7 +13,7 @@ function NavBackOffice({ onSelect }: NavBackOfficeProps) {
       if (data.authenticated === false) {
         navigate("/login");
       } else {
-        console.error("Logout failed:", data);
+        console.error("erreur lors de la déconnexion :", data);
       }
     });
   };
