@@ -4,7 +4,7 @@ import Login from "./pages/Login/Login";
 import BackOffice from "./pages/backoffice/Backoffice";
 import Chargement from "./pages/Loading/Loading";
 import SignUp from "./pages/SignUp/SignUp";
-import Profil from "./pages/backoffice/Profil/Profil";
+// import Profil from "./pages/backoffice/Profil/Profil";
 import RemoveProject from "./pages/backoffice/RemoveProject/RemoveProject";
 import ModifyProject from "./pages/backoffice/ModifyProject/ModifyProject";
 import ModifyProjectId from "./pages/backoffice/ModifyProjectId/ModifyProjectId";
@@ -66,14 +66,14 @@ function App() {
               </AuthenticatedRoute>
             }
           />
-          <Route
+          {/* <Route
             path="profil"
             element={
               <AuthenticatedRoute>
                 <Profil />
               </AuthenticatedRoute>
             }
-          />
+          /> */}
         </Route>
 
         <Route path="/loading" element={<Chargement />} />

@@ -5,7 +5,7 @@ import { useState } from "react";
 import AddProject from "./AddProject/AddProject";
 import ModifyProject from "./ModifyProject/ModifyProject";
 import RemoveProject from "./RemoveProject/RemoveProject";
-import Profil from "./Profil/Profil";
+// import Profil from "./Profil/Profil";
 
 function BackOffice() {
   const [selected, setSelected] = useState("");
@@ -18,7 +18,7 @@ function BackOffice() {
           {selected === "add-project" && <AddProject />}
           {selected === "modify-project" && <ModifyProject />}
           {selected === "remove-project" && <RemoveProject />}
-          {selected === "profil" && <Profil />}
+          {/* {selected === "profil" && <Profil />} */}
         </div>
       </div>
     </div>
